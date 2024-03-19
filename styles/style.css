@@ -1,0 +1,234 @@
+html {
+    position: relative;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+  
+  body {
+    position: relative;
+    overflow-x: hidden;
+    min-width: 320px;
+    min-height: 100vh;
+    font-family: Raleway, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+    font-size: 16px;    
+  }
+  
+  
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  svg {
+    max-height: 100%;
+  }
+  
+
+  button {
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  h1,
+  h2,
+  h3,
+  p,
+  figure {
+    margin: 0;
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  
+  
+  iframe {
+    border: none;
+  }
+  
+  /*
+  Доступно скрываю элементы
+  */
+  
+  .visually-hidden {
+    position: fixed;
+    transform: scale(0);
+  }
+
+
+.container {
+    --container-width: 1180px;
+    --container-padding: 30px;
+    max-width: calc(var(--container-width) + var(--container-padding) * 2);
+    padding: 0 var(--container-padding);
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
+
+main {
+    position: relative;
+}
+
+.wrapper {
+  overflow: hidden;
+}
+
+.no-transition {
+  transition-duration: 0.1s !important;
+}
+
+.layer {
+    transition: .3s opacity ease-in-out, .3s transform ease-in-out;
+}
+
+.hero__bg {
+    transition: .25s transform ease-in-out;
+}
+
+.scrolled .layer,  
+.scrolled .hero__bg {
+    transition: .8s opacity linear, .8s transform ease-in-out;
+}
+
+.hidden {
+    opacity: 0 !important;
+    visibility: hidden;
+    transform: scale(0.85);
+    pointer-events: none;
+}
+
+.toTop {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    background: #ffffff;
+    border: 0;
+    outline: 0;
+    color: #D10014;
+    font-size: 26px;
+    width: 54px;
+    height: 54px;
+    transition: .25s opacity linear, .32s transform linear, .7s color linear, .1s background-color linear, .25s visibility linear;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    transform: scale(1);
+    transform-origin: top center;
+    pointer-events: all;
+    z-index: 11;
+    overflow: hidden;
+    /* border: 1px solid #d1001580; */
+}
+
+.toTop::before {
+  content: '';
+  background-color: #D10014;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  transform: translateY(-60px) rotate(-50deg) translate3d(0, 0, 0);
+  border-radius: 5% 40% 0% 25%;
+  pointer-events: none;
+  transition: .75s opacity cubic-bezier(.42,.05,.16,.91), .65s cubic-bezier(.42,.05,.16,.91);
+  transform-origin: top right;
+}
+
+.button-wrap {
+    position: sticky;
+    bottom: 0;
+    z-index: 12;
+}
+
+.toTop:hover, .toTop:focus-within {
+    color: #ffffff;
+    background-color: rgba(158, 0, 16, 0.466);
+}
+
+.toTop:hover::before {
+  opacity: 1;
+  transform: translateY(0) rotate(0) translate3d(0, 0, 0);
+  border-radius: 5% 40% 5% 20%;
+}
+
+.hidden-to-top {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.85);
+    pointer-events: none;
+}
+
+@media (max-width: 1080px) {
+    .container {
+        --container-padding: 66px;
+    }
+
+    .toTop {
+      width: 44px;
+      height: 44px;
+      font-size: 24px;
+    }
+
+    .toTop:hover {
+      color: #D10014;
+      background-color: #ffffff;
+    }
+
+    .toTop:hover::before {
+      content: '';
+      display: none;
+      z-index: -1;
+    }
+}
+
+@media (max-width: 920px) {
+    .container {
+        --container-padding: 44px;
+    }
+}
+
+@media (max-width: 660px) {
+    .container {
+        --container-padding: 20px;
+    }
+}
+
+@media (max-width: 460px) {
+    .container {
+        --container-padding: 16px;
+    }
+}
+
+
