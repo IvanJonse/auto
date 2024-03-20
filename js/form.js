@@ -5,24 +5,39 @@ const inputs = document.querySelectorAll('.form__input, .radio__input');
 
 let currentStep = 0;
 
-const findBtn = (button) => document.querySelector(`[data-id="${button}"]`);
+const findBtn = (id) => {
+    for (let button of buttons) {
+        if (button.getAttribute('data-id') === id) {
+            return button;
+        }
+    }
+    return null;
+};
 
 const updateVisibility = (id) => {
-    fieldsets.forEach((fieldset, index) => {
-        if (currentStep === index) {
-            fieldset.classList.add('form__fieldset--active');
-        } else {
-            fieldset.classList.remove('form__fieldset--active');
-        }
-        document.body.classList.remove('form--active')
-    }
 
+    document.body.classList.remove('form--active')
+
+    fieldsets.forEach((fieldset, index) => {
+            if (currentStep === index) {
+                fieldset.classList.add('form__fieldset--active');
+            } else {
+                fieldset.classList.remove('form__fieldset--active');
+            }
+        }
     )
+
     if (id !== 'prev') {
         findBtn(id).disabled = true;
     }
 
-    validateForm();
+    const isValidChecked = validateForm('radio');
+
+    findBtn('next').disabled = !isValidChecked;
+
+    const isValidText = validateForm('text');
+
+    findBtn('submit').disabled = isValidText;
 
     findBtn('next').classList.add('form__btn-active');
     findBtn('prev').classList.add('form__btn-active');
@@ -39,7 +54,6 @@ const updateVisibility = (id) => {
     }
 
 }
-
 
 const changeSlide = (e) => {
     setTimeout(() => {
@@ -64,63 +78,46 @@ buttons.forEach((button) => {
     }
 )
 
-const validateForm = () => {
+const validateForm = (type) => {
+    let isValid = true;
 
-    for (let i = 0; i < fieldsets.length; i++) {
+        const containerElements = fieldsets[currentStep]
+        .querySelectorAll('.form__radio-wrapper, .form__input-wrapper');
 
-        if (currentStep === i) {
+        containerElements.forEach((container) => {
+            
+            const inputList = container.querySelectorAll('input');
 
-            let fields = fieldsets[i].querySelectorAll('.form__radio-wrapper, .form__input-wrapper');
+            let hasValueCheck = false;
+            let hasValueInput = false;
 
-            const length = fields.length - 1;
-            let hasMissingInput = false;
-
-            fields.forEach((field, i) => {
-                const inputList = field.querySelectorAll('input');
-                let hasMoreInput = false;
-
-                for (let j = 0; j < inputList.length; j++) {
-                    if (inputList[j].type === 'text' && !inputList[j].value.trim()) {
-                        hasMissingInput = true;
-                    }
-
-                    if (inputList[j].checked) {
-                        hasMoreInput = true;
-                    }
-                }
-
-                if (!hasMoreInput) {
-                    findBtn('next').disabled = true;
-                }
-
-                if (hasMoreInput) {
-                    for (let k = i + length; k < fields.length; k++) {
-                        const otherInputs = fields[k].querySelectorAll('input');
-                        let otherHasMoreInput = false;
-
-                        for (let l = 0; l < otherInputs.length; l++) {
-                            if (otherInputs[l].checked) {
-                                otherHasMoreInput = true;
-                            }
-                        }
-                        if (otherHasMoreInput) {
-                            findBtn('next').disabled = false;
-                        }
-                    }
+            inputList.forEach((input) => {
+                if ((type === 'checkbox' || type === 'radio') && input.checked) {
+                    hasValueCheck = true;
+                } else if (type === 'text' && !input.value && input.required) {
+                    hasValueInput = true;
                 }
             });
-
-            if (hasMissingInput) {
-                findBtn('submit').disabled = true;
-            } else {
-                findBtn('submit').disabled = false;
+            if (!hasValueCheck) {
+                isValid = false;
             }
-        }
+            if (hasValueInput) {
+                isValid = true;
+            }
+        });
+
+        return isValid;
     }
+
+
+const onInput = () => {
+    const isValidChecked = validateForm('radio');
+    const isValidText = validateForm('text');
+    findBtn('next').disabled = !isValidChecked;
+    findBtn('submit').disabled = isValidText;
 }
 
-
 inputs.forEach((input) => {
-        input.addEventListener('input', validateForm);
+        input.addEventListener('input', onInput);
     }
 )

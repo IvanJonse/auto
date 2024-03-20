@@ -26,13 +26,12 @@
     border-radius: 32px;
     position: relative;
     overflow: hidden;
-    /* background-color: #e4f0f0; */
 }
 
 .form::after {
     content: '';
-    /* background: #01835c; */
-    background: radial-gradient(circle,
+    background: radial-gradient(
+        circle,
         rgb(255, 255, 255) 40%, 
         rgba(209, 17, 0, 0.1) 0%,   
         rgba(253, 30, 1, 0.2) 45%,   
@@ -42,7 +41,8 @@
         rgba(224, 7, 7, 0.6) 55%,    
         rgba(191, 0, 0, 0.7) 10%,    
         rgba(188, 0, 0, 0.8) 60%,    
-        rgba(185, 12, 0, 0.9) 10% );
+        rgba(185, 12, 0, 0.9) 10% 
+    );
     background-size: 0% 150%;
     background-position: center center;
     background-repeat: no-repeat;
@@ -60,7 +60,6 @@
 }
 
 .form--active .form::after{
-
     visibility: visible;
     background-size: 300% 300%;
     transform: scaleY(1);
@@ -69,9 +68,9 @@
     opacity: 1;
 }
 
-.form--active .form {
+/* .form--active .form {
 
-}
+} */
 
 .form__title {
     font-size: 32px;
@@ -152,13 +151,13 @@
 }
 
 
-.contact__form {
+/* .contact__form {
 
 }
 
 .form__type {
 
-}
+} */
 
 .form__subtitle {
     margin-bottom: 16px;
@@ -186,9 +185,9 @@
 
 }
 
-.form__days {
+/* .form__days {
 
-}
+} */
 
 .form__time {
     margin-top: 32px;
@@ -254,18 +253,16 @@
    opacity: 0;
    pointer-events: none;
    position: fixed;
-   /* display: none; */
-   visibility: visible;
+   visibility: hidden;
    transform: translateY(800px);
-   transition: transform 1.5s, opacity .4s, visibility 3s;
    transition-timing-function: linear;
+   transition: transform 1s, opacity .7s, visibility .7s;
 }
 
  .form__btn-active {
     position: static;
     opacity: 1;
     pointer-events: all;
-    /* display: flex; */
 }
 
 .form__btn--next {
@@ -286,7 +283,8 @@
 .form--active .form__btn {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0%);
+    transform: translateY(0);
+    animation: bounce 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 @media (max-width: 1080px) {
@@ -349,4 +347,16 @@
 }
 
 
+@keyframes bounce {
+    0% {
+        transform: translateY(800px);
+        opacity: 0;
+        visibility: hidden;
+    }
 
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+}
