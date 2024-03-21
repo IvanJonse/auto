@@ -20,7 +20,7 @@ function parlax() {
         const aboutTopSection = about.getBoundingClientRect().top + 580;
 
         layers.forEach((layer, index) => {
-                let opacityNext = currentOpacity - (0.09 * index);
+                let opacityNext = currentOpacity - (0.095 * index);
                 currentOpacity = opacityNext;
                 
                 const speed = layer.getAttribute('data-speed');

@@ -19,25 +19,22 @@ const updateVisibility = (id) => {
     document.body.classList.remove('form--active')
 
     fieldsets.forEach((fieldset, index) => {
-            if (currentStep === index) {
-                fieldset.classList.add('form__fieldset--active');
-            } else {
-                fieldset.classList.remove('form__fieldset--active');
-            }
+        if (currentStep === index) {
+            fieldset.classList.add('form__fieldset--active');
+        } else {
+            fieldset.classList.remove('form__fieldset--active');
         }
+    }
     )
 
     if (id !== 'prev') {
         findBtn(id).disabled = true;
     }
 
-    const isValidChecked = validateForm('radio');
+    const isValid = validateForm();
 
-    findBtn('next').disabled = !isValidChecked;
-
-    const isValidText = validateForm('text');
-
-    findBtn('submit').disabled = isValidText;
+    findBtn('next').disabled = !isValid.isNext;
+    findBtn('submit').disabled = isValid.isSubmit;
 
     findBtn('next').classList.add('form__btn-active');
     findBtn('prev').classList.add('form__btn-active');
@@ -52,7 +49,6 @@ const updateVisibility = (id) => {
     if (currentStep === 0) {
         findBtn('prev').classList.remove('form__btn-active');
     }
-
 }
 
 const changeSlide = (e) => {
@@ -74,50 +70,72 @@ const changeSlide = (e) => {
 }
 
 buttons.forEach((button) => {
-        button.addEventListener('click', changeSlide);
-    }
+    button.addEventListener('click', changeSlide);
+}
 )
 
-const validateForm = (type) => {
-    let isValid = true;
+const validateInput = (inputList) => {
+    let isValidInput = true;
+    inputList.forEach((input) => {
+        if (input.type === 'text' && input.required && !input.value) {
+            isValidInput = false;
+        } 
+    })
+    return isValidInput;
+}
 
-        const containerElements = fieldsets[currentStep]
+const hasChecked = (inputList) => [].some.call(inputList, function(input) {
+    return input.checked;
+});
+
+
+const validateForm = () => {
+    let isNext = true;
+    let isSubmit = true;
+
+    const containerElements = fieldsets[currentStep]
         .querySelectorAll('.form__radio-wrapper, .form__input-wrapper');
 
-        containerElements.forEach((container) => {
-            
-            const inputList = container.querySelectorAll('input');
+    containerElements.forEach((container) => {
 
-            let hasValueCheck = false;
-            let hasValueInput = false;
+       const inputList = container.querySelectorAll('input');
 
-            inputList.forEach((input) => {
-                if ((type === 'checkbox' || type === 'radio') && input.checked) {
-                    hasValueCheck = true;
-                } else if (type === 'text' && !input.value && input.required) {
-                    hasValueInput = true;
-                }
-            });
-            if (!hasValueCheck) {
-                isValid = false;
+       const isValidInput = validateInput(inputList);
+
+        if (isValidInput) {
+            isSubmit = false;
+        }
+
+        const isValidChecked = hasChecked(inputList);
+        const hasTextField = container.querySelectorAll('input[type=text]')[0];
+        if (!isValidChecked) {
+            if (hasTextField && isValidInput) {
+                isNext = true;
+                return
             }
-            if (hasValueInput) {
-                isValid = true;
-            }
-        });
+            isNext = false;
+            return;
+        }
+    })
 
-        return isValid;
-    }
-
+    return {
+        isNext,
+        isSubmit
+    };
+};
 
 const onInput = () => {
-    const isValidChecked = validateForm('radio');
-    const isValidText = validateForm('text');
-    findBtn('next').disabled = !isValidChecked;
-    findBtn('submit').disabled = isValidText;
+    const isValid = validateForm();
+    findBtn('next').disabled = !isValid.isNext;
+    findBtn('submit').disabled = isValid.isSubmit;
 }
 
 inputs.forEach((input) => {
         input.addEventListener('input', onInput);
     }
 )
+
+form.addEventListener('submit', (e)=> {
+    e.preventDefault()
+    
+});
