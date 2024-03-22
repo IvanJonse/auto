@@ -30,18 +30,18 @@
 
 .form::after {
     content: '';
-    background: radial-gradient(
-        circle,
-        rgb(208 21 21) 40%, 
-        rgba(185, 12, 0, 0.95) 0%,
-        rgba(188, 0, 0, 0.8) 45%,  
-        rgba(191, 0, 0, 0.7) 10%, 
-        rgba(224, 7, 7, 0.6) 50%,  
-        rgba(197, 0, 0, 0.5) 10%,   
-        rgba(255, 0, 0, 0.4) 55%, 
-        rgba(253, 30, 1, 0.3) 10%,   
-        rgba(197, 19, 19, 0.2) 60%,   
-        rgba(209, 17, 0, 0.1) 10%         
+    background: radial-gradient(        
+        circle,        
+        rgb(252, 2, 2) 40%,         
+        rgba(185, 12, 0, 0.95) 0%,        
+        rgba(188, 0, 0, 0.8) 45%,          
+        rgba(191, 0, 0, 0.7) 10%,         
+        rgba(224, 7, 7, 0.6) 50%,          
+        rgba(197, 0, 0, 0.5) 10%,           
+        rgba(255, 0, 0, 0.4) 55%,         
+        rgba(253, 30, 1, 0.3) 10%,           
+        rgba(197, 19, 19, 0.2) 60%,           
+        rgba(209, 17, 0, 0.1) 10%           
     );
     background-size: 0% 150%;
     background-position: center center;
@@ -63,7 +63,7 @@
     visibility: visible;
     background-size: 300% 300%;
     transform: scaleY(1);
-    transition: transform 0s, background-size 1.2s, opacity .55s, visibility .55s;
+    transition: transform 0s, background-size 1s, opacity .55s, visibility .55s;
     transition-timing-function: cubic-bezier(.42,.43,.65,.73);
     opacity: 1;
 }

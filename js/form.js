@@ -6,12 +6,13 @@ const inputs = document.querySelectorAll('.form__input, .radio__input');
 let currentStep = 0;
 
 const findBtn = (id) => {
-    for (let button of buttons) {
-        if (button.getAttribute('data-id') === id) {
-            return button;
+    let button = null;
+    buttons.forEach((item)=> {
+        if (item.getAttribute('data-id') === id) {
+            button = item;
         }
-    }
-    return null;
+    })
+    return button;
 };
 
 const updateVisibility = (id) => {
@@ -70,8 +71,8 @@ const changeSlide = (e) => {
 }
 
 buttons.forEach((button) => {
-    button.addEventListener('click', changeSlide);
-}
+        button.addEventListener('click', changeSlide);
+    }
 )
 
 const validateInput = (inputList) => {
@@ -84,10 +85,11 @@ const validateInput = (inputList) => {
     return isValidInput;
 }
 
-const hasChecked = (inputList) => [].some.call(inputList, function(input) {
-    return input.checked;
-});
-
+const hasChecked = (inputList) => {
+    return Array.from(inputList).some((input) => {
+        return input.checked;
+    });
+};
 
 const validateForm = () => {
     let isNext = true;
@@ -107,6 +109,7 @@ const validateForm = () => {
         }
 
         const isValidChecked = hasChecked(inputList);
+        
         const hasTextField = container.querySelectorAll('input[type=text]')[0];
         if (!isValidChecked) {
             if (hasTextField && isValidInput) {
@@ -114,7 +117,7 @@ const validateForm = () => {
                 return
             }
             isNext = false;
-            return;
+            // return;
         }
     })
 
@@ -137,5 +140,5 @@ inputs.forEach((input) => {
 
 form.addEventListener('submit', (e)=> {
     e.preventDefault()
-    
+
 });
