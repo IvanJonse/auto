@@ -15,22 +15,8 @@ const findBtn = (id) => {
     return button;
 };
 
-const updateVisibility = (id) => {
 
-    document.body.classList.remove('form--active')
-
-    fieldsets.forEach((fieldset, index) => {
-        if (currentStep === index) {
-            fieldset.classList.add('form__fieldset--active');
-        } else {
-            fieldset.classList.remove('form__fieldset--active');
-        }
-    }
-    )
-
-    if (id !== 'prev') {
-        findBtn(id).disabled = true;
-    }
+const setButtonsDisabled = () => {
 
     const isValid = validateForm();
 
@@ -50,14 +36,29 @@ const updateVisibility = (id) => {
     if (currentStep === 0) {
         findBtn('prev').classList.remove('form__btn-active');
     }
-}
+};
+
+const updateVisibility = (id) => {
+    document.body.classList.remove('form--active');
+        fieldsets.forEach((fieldset, index) => {
+            if (currentStep === index) {
+                fieldset.classList.add('form__fieldset--active');
+            } else {
+                fieldset.classList.remove('form__fieldset--active');
+            }
+        }
+    );
+    if (id !== 'prev') {
+        findBtn(id).disabled = true;
+    }
+    setButtonsDisabled(id);
+};
 
 const changeSlide = (e) => {
     setTimeout(() => {
         document.body.classList.add('form--active');
-    }, 250)
+    }, 250);
 
-    e.preventDefault();
     const id = e.currentTarget.dataset.id;
 
     if (id === 'next' && currentStep < fieldsets.length - 1) {
@@ -68,25 +69,24 @@ const changeSlide = (e) => {
 
     updateVisibility(id);
 
-}
+};
 
 buttons.forEach((button) => {
         button.addEventListener('click', changeSlide);
     }
-)
+);
 
-const validateInput = (inputList) => {
-    let isValidInput = true;
-    inputList.forEach((input) => {
+const validateInputText = (inputList) => {
+    return inputList.every((input) => {
         if (input.type === 'text' && input.required && !input.value) {
-            isValidInput = false;
+           return false;
         } 
-    })
-    return isValidInput;
-}
+        return true;
+    });
+};
 
-const hasChecked = (inputList) => {
-    return Array.from(inputList).some((input) => {
+const validateInputChecked = (inputList) => {
+    return inputList.some((input) => {
         return input.checked;
     });
 };
@@ -98,29 +98,43 @@ const validateForm = () => {
     const containerElements = fieldsets[currentStep]
         .querySelectorAll('.form__radio-wrapper, .form__input-wrapper');
 
-    containerElements.forEach((container) => {
+    //joining 2 arrays
+    const inputList = Array.from(containerElements).map((el)=> {
+       return el.querySelectorAll('input');
+    });
 
-       const inputList = container.querySelectorAll('input');
+    //iteration by containers
+    for (let input of inputList) {     
 
-       const isValidInput = validateInput(inputList);
+        let inputItem = Array.from(input);
+
+        //checking valid input-text
+        const isValidInput = validateInputText(inputItem);
 
         if (isValidInput) {
             isSubmit = false;
         }
 
-        const isValidChecked = hasChecked(inputList);
-        
-        const hasTextField = container.querySelectorAll('input[type=text]')[0];
+        //checking valid checkbox or radio
+        const isValidChecked = validateInputChecked(inputItem);
+
+        //have input-text with radio?
+        const hasTextField = inputItem.every((el) => {
+                el.type === 'text' && el.type === 'radio' 
+                || 
+                el.type === 'text' && el.type === 'checkbox'
+            }
+        );
+
         if (!isValidChecked) {
+            //has input-text with radio and valid
             if (hasTextField && isValidInput) {
                 isNext = true;
-                return
+                return;
             }
             isNext = false;
-            // return;
         }
-    })
-
+    };
     return {
         isNext,
         isSubmit
@@ -139,6 +153,6 @@ inputs.forEach((input) => {
 )
 
 form.addEventListener('submit', (e)=> {
-    e.preventDefault()
-
+    e.preventDefault();
+    setButtonsDisabled();
 });

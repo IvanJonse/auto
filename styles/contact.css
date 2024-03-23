@@ -32,7 +32,7 @@
     content: '';
     background: radial-gradient(        
         circle,        
-        rgb(252, 2, 2) 40%,         
+        rgb(255, 255, 255) 40%,         
         rgba(185, 12, 0, 0.95) 0%,        
         rgba(188, 0, 0, 0.8) 45%,          
         rgba(191, 0, 0, 0.7) 10%,         
@@ -78,7 +78,7 @@
     font-weight: 700;
     line-height: 100%;
     margin-bottom: 32px;
-    color: #fff;
+    color: #222;
 }
 
 .form__fieldset {
@@ -163,7 +163,7 @@
     font-size: 16px;
     line-height: 140%;
     font-weight: 500;
-    color: #ffffff;
+    color: #222;
 }
 
 .form__months {
@@ -175,7 +175,7 @@
 
 
 .form__btn-month--active {
-    color: #ffffff;
+    color: #D10014;
     transform: scale(1.15);
 }
 
