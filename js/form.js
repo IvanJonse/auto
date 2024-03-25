@@ -99,15 +99,14 @@ const validateForm = () => {
         .querySelectorAll('.form__radio-wrapper, .form__input-wrapper');
 
     //joining 2 arrays
-    const inputList = Array.from(containerElements).map((el)=> {
-       return el.querySelectorAll('input');
+    let inputList = [];
+   
+    containerElements.forEach((container)=> {
+        inputList.push(Array.from(container.querySelectorAll('input')));
     });
 
     //iteration by containers
-    for (let input of inputList) {     
-
-        let inputItem = Array.from(input);
-
+    for (let inputItem of inputList) {    
         //checking valid input-text
         const isValidInput = validateInputText(inputItem);
 
@@ -120,21 +119,20 @@ const validateForm = () => {
 
         //have input-text with radio?
         const hasTextField = inputItem.every((el) => {
-                el.type === 'text' && el.type === 'radio' 
+              return (el.type === 'radio' 
                 || 
-                el.type === 'text' && el.type === 'checkbox'
+                el.type === 'checkbox') 
             }
         );
-
         if (!isValidChecked) {
-            //has input-text with radio and valid
-            if (hasTextField && isValidInput) {
+            // has input-text with radio and valid
+            if (!hasTextField && isValidInput) {
                 isNext = true;
-                return;
+            } else {
+                isNext = false;
             }
-            isNext = false;
         }
-    };
+     };
     return {
         isNext,
         isSubmit
