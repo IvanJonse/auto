@@ -146,7 +146,7 @@ main {
     pointer-events: all;
     z-index: 11;
     overflow: hidden;
-    /* border: 1px solid #d1001580; */
+    border: 1px solid #d1001580;
 }
 
 .toTop::before {

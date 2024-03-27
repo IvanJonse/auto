@@ -1,6 +1,6 @@
 .contact {
     padding: 94px 0 120px;
-    background-color: #000000;
+    background-color: #f0f4f4;
     position: relative;
     z-index: 10;
 }
@@ -12,10 +12,10 @@
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 40px;
-    color: #fff;
+    color: #222;
 }
 .contact__title span {
-    color: #a5a5a5;
+    color: #D10014;
 }
 
 .form {
@@ -29,20 +29,20 @@
 
 .form::after {
     content: '';
-    background: radial-gradient(        
-        circle,        
-        rgb(208 21 21) 40%,         
-        rgba(185, 12, 0, 0.95) 0%,        
-        rgba(188, 0, 0, 0.8) 45%,          
-        rgba(191, 0, 0, 0.7) 10%,         
-        rgba(224, 7, 7, 0.6) 50%,          
-        rgba(197, 0, 0, 0.5) 10%,           
-        rgba(255, 0, 0, 0.4) 55%,         
-        rgba(253, 30, 1, 0.3) 10%,           
-        rgba(197, 19, 19, 0.2) 60%,           
-        rgba(209, 17, 0, 0.1) 10%           
+    background: radial-gradient(
+        circle,
+        #ffffff 40%,
+        rgba(250, 250, 250, 0.9) 0%,
+        rgba(250, 250, 250, 0.6) 45%,
+        rgba(250, 250, 250, 0.5) 10%,
+        rgba(250, 250, 250, 0.4) 50%,
+        rgba(250, 250, 250, 0.3) 10%,
+        rgba(250, 250, 250, 0.3) 55%,
+        rgba(250, 250, 250, 0.2) 10%,
+        rgba(250, 250, 250, 0.2) 60%,
+        rgba(250, 250, 250, 0.1) 10%
     );
-    background-size: 0% 150%;
+    background-size: 0% 200%;
     background-position: center center;
     background-repeat: no-repeat;
     position: absolute;
@@ -59,10 +59,11 @@
 }
 
 .form--active .form::after{
+    background-color: #d1cbcb7c;
     visibility: visible;
     background-size: 300% 300%;
     transform: scaleY(1);
-    transition: transform 0s, background-size 1.3s, opacity .55s, visibility .55s;
+    transition: transform 0s, background-size 1.5s, opacity .055s, visibility .055s;
     transition-timing-function: cubic-bezier(.42,.43,.65,.73);
     opacity: 1;
 }
@@ -73,7 +74,7 @@
     font-weight: 700;
     line-height: 100%;
     margin-bottom: 32px;
-    color: #ffffff;
+    color: #222;
 }
 
 .form__fieldset {
@@ -82,8 +83,8 @@
     opacity: 0;
     position: fixed;
     visibility: hidden;
-    transform: translateY(-200%);
-    transition: transform 1.7s, opacity 2.8s, visibility 2.8s;
+    transform: translateY(-150%);
+    transition: transform 1s, opacity 2.8s, visibility 2.8s;
     transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
     transform-origin: top;
 }
@@ -127,10 +128,6 @@
     border: 1px solid transparent;
 }
 
-/* .radio__input:hover + .radio__label {
-    background-color: #e4f0f0;
-} */
-
 .radio__input:hover + .radio__label {
     background-color: #e4f0f0;
 }
@@ -144,28 +141,19 @@
     color: #fff;
 }
 
-
-/* .contact__form {
-
-}
-
-.form__type {
-
-} */
-
 .form__subtitle {
     margin-bottom: 16px;
     font-size: 16px;
     line-height: 140%;
     font-weight: 500;
-    color: #ffffff;
+    color: #222;
 }
 
 .form__months {
     margin-bottom: 16px;
     display: flex;
     gap: 16px;
-    color: #ffffff;
+    color: #222;
 }
 
 .form__btn-month {
@@ -173,18 +161,29 @@
     line-height: 140%;
     font-weight: 500;
     color: inherit;
+    transform: scale(1);
+    transition: transform .1s linear;
 }
 
 .form__btn-month--active {
-    color: #e77a7a;
+    color: #D10014;
     transform: scale(1.15);
 }
-/* .form__days {
-
-} */
 
 .form__time {
     margin-top: 32px;
+    transform-origin: top right;
+    opacity: 0;
+    visibility: hidden;
+    transform: scaleY(0);
+}
+
+.checked {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+    transition: transform .5s, opacity 1.8s, visibility 1.8s;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.320, 1);
 }
 
 .form__input-wrapper {
@@ -216,7 +215,7 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 140%;
-    color: #ffffff;
+    color: #222;
     margin-bottom: 4px;
 }
 
@@ -230,6 +229,7 @@
     display: flex;
     align-items: center;  
     gap: 8px;
+    position: relative;
 }
 
 .form__btn {
@@ -245,17 +245,23 @@
    background-color: #F0F4F4;
    color: #222;
    opacity: 0;
-   pointer-events: none;
+   transform: translateY(400%) ;
    position: fixed;
-   visibility: hidden;
-   transform: translateY(800px);
-   transition-timing-function: linear;
-   transition: transform 1s, opacity .7s, visibility .7s;
+   pointer-events: none;
+}
+
+.form--active .form__btn {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 1.5s, opacity .5s;
+    transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    transform-origin: bottom;
 }
 
  .form__btn-active {
     position: static;
     opacity: 1;
+    visibility: visible;
     pointer-events: all;
 }
 
@@ -264,7 +270,6 @@
     background-color: #D10014;
 }
 
-
 .form__btn:disabled {
     pointer-events: none;
     opacity: .4 !important;
@@ -272,13 +277,6 @@
 
 .form__btn--submit-active {
     opacity: 1;
-}
-
-.form--active .form__btn {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    animation: bounce 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 @media (max-width: 1080px) {
@@ -301,6 +299,14 @@
 }
 
 @media (max-width: 920px) {
+    .form__fieldset {
+        transform: translateY(-50%);
+    }
+
+    .form__fieldset--active {
+        transform: translateY(0);
+    }
+
     .contact {
         padding-top: 48px;
         padding-bottom: 100px;
@@ -310,7 +316,6 @@
         font-size: 48px;
     }
 }
-
 
 @media (max-width: 660px) {
     .form {
@@ -337,20 +342,5 @@
 @media (max-width: 460px) {
     .contact__title {
         font-size: 32px;
-    }
-}
-
-
-@keyframes bounce {
-    0% {
-        transform: translateY(800px);
-        opacity: 0;
-        visibility: hidden;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
     }
 }
